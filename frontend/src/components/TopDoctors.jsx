@@ -20,7 +20,7 @@ const TopDoctors = () => {
               Index={idx}
               docImage={item.image}
               docName={item.name}
-              speciality={item.speciality}
+              docSpeciality={item.speciality}
             />
           );
         })}

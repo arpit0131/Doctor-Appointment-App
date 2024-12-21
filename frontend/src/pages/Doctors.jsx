@@ -7,6 +7,8 @@ import TopDoctor from '../components/TopDoctor';
 const Doctors = () => {
   const { speciality } = useParams();
   const [filterDoc, setFilterDoc] = useState([]);
+  const [lastClicked, setLastClicked] = useState(null);
+  const [isGeneralView, setIsGeneralView] = useState(false);
   const navigate = useNavigate();
   const { doctors } = useContext(AppContext);
   const specialitySet = specialityData.map((doc) => doc.speciality);
@@ -16,6 +18,24 @@ const Doctors = () => {
       setFilterDoc(doctors.filter((doc) => doc.speciality === speciality));
     } else {
       setFilterDoc(doctors);
+    }
+  };
+  const handleClick = (speciality) => {
+    if (lastClicked === speciality) {
+      if (isGeneralView) {
+        // Navigate to filtered specialty
+        navigate(`/doctors/${speciality}`);
+        setIsGeneralView(false);
+      } else {
+        // Navigate to general doctors page
+        navigate('/doctors');
+        setIsGeneralView(true);
+      }
+    } else {
+      // Navigate to new specialty and update state
+      setLastClicked(speciality);
+      setIsGeneralView(false);
+      navigate(`/doctors/${speciality}`);
     }
   };
 
@@ -31,11 +51,7 @@ const Doctors = () => {
           {specialitySet.map((speciality, idx) => (
             <p
               className={`w-[94vw] sm:w-auto pl-3 py-3 pr-16 border border-gray-300 rounded transition-all cursor-pointer hover:bg-gray-200`}
-              onClick={() =>
-                speciality === ''
-                  ? navigate('/doctors')
-                  : navigate(`/doctors/${speciality}`)
-              }
+              onClick={() => handleClick(speciality)}
               key={idx}
             >
               {speciality}
@@ -51,7 +67,7 @@ const Doctors = () => {
                 Index={idx}
                 docImage={item.image}
                 docName={item.name}
-                speciality={item.speciality}
+                docSpeciality={item.speciality}
               />
             );
           })}
