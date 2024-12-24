@@ -16,6 +16,7 @@ const TopDoctors = () => {
         {doctors.slice(0, 6).map((item, idx) => {
           return (
             <TopDoctor
+              key={item._id}
               itemId={item._id}
               Index={idx}
               docImage={item.image}

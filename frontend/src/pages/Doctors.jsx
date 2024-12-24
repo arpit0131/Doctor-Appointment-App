@@ -63,6 +63,7 @@ const Doctors = () => {
           {filterDoc.map((item, idx) => {
             return (
               <TopDoctor
+                key={item._id}
                 itemId={item._id}
                 Index={idx}
                 docImage={item.image}

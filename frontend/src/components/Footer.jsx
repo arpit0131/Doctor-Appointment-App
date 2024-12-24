@@ -8,10 +8,11 @@ const Footer = () => {
         <div>
           <img className='mb-5 w-40' src={assets.logo} alt='prescripto-logo' />
           <p className='w-full md:w-2/3 text-gray-600 leading-6'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum,
-            dolores repellendus minima placeat maxime quibusdam cumque quos
-            voluptatibus est voluptatem quis veritatis incidunt ullam odit
-            exercitationem vel unde quod distinctio.
+            We offer comprehensive medical care with all types of medicines
+            readily available. Our team of highly qualified doctors and
+            experienced staff is dedicated to providing personalized treatment.
+            Equipped with advanced facilities, we ensure accurate diagnostics
+            and effective care. Visit us for a healthier, happier you!
           </p>
         </div>
         {/**-------Middle--------- */}
