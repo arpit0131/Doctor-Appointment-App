@@ -7,7 +7,7 @@ const TopDoctor = ({ itemId, Index, docImage, docName, docSpeciality }) => {
     <div
       onClick={() => navigate(`/appointment/${itemId}`)}
       key={Index}
-      className='border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-20px] transition-all'
+      className='border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-20px] transition-all duration-300'
     >
       <img className='bg-blue-50' src={docImage} alt="doctor's image" />
       <div className='p-4'>

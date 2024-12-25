@@ -17,7 +17,7 @@ const SpecialityMenu = () => {
         {specialityData.map((item, idx) => (
           <Link
             onClick={() => scrollTo(0, 0)}
-            className='flex flex-col items-center text-xs flex-shrink-0 hover:translate-y-[-20px] transition-all'
+            className='flex flex-col items-center text-xs flex-shrink-0 hover:translate-y-[-20px] transition-all duration-300'
             key={idx}
             to={`/doctors/${item.speciality}`}
           >

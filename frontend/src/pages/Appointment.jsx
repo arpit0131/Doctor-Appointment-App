@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { assets } from '../assets/assets_frontend/assets';
+import RelatedDoctor from '../components/RelatedDoctor';
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -69,9 +70,7 @@ const Appointment = () => {
     getAvailableSlots();
   }, [docInfo]);
 
-  useEffect(() => {
-    console.log(docSlots);
-  }, [docSlots]);
+  useEffect(() => {}, [docSlots]);
 
   if (!docInfo) {
     return (
@@ -173,6 +172,9 @@ const Appointment = () => {
           Book and Appointment
         </button>
       </div>
+
+      {/* Related Doctors */}
+      <RelatedDoctor docId={docId} speciality={docInfo.speciality} />
     </div>
   );
 };

@@ -50,7 +50,7 @@ const Doctors = () => {
         <div className='flex flex-col gap-4 text-sm text-gray-600'>
           {specialitySet.map((speciality, idx) => (
             <p
-              className={`w-[94vw] sm:w-auto pl-3 py-3 pr-16 border border-gray-300 rounded transition-all cursor-pointer hover:bg-gray-200`}
+              className={`w-[94vw] sm:w-auto pl-3 py-3 pr-16 border border-gray-300 rounded transition-all duration-300 cursor-pointer hover:bg-gray-200`}
               onClick={() => handleClick(speciality)}
               key={idx}
             >
