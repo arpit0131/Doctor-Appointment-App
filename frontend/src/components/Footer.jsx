@@ -7,7 +7,7 @@ const Footer = () => {
         {/**-------Left--------- */}
         <div>
           <img className='mb-5 w-40' src={assets.logo} alt='prescripto-logo' />
-          <p className='w-full md:w-2/3 text-gray-600 leading-6'>
+          <p className='w-full md:w-2/3 text-gray-600 leading-6 text-justify'>
             We offer comprehensive medical care with all types of medicines
             readily available. Our team of highly qualified doctors and
             experienced staff is dedicated to providing personalized treatment.
