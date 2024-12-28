@@ -12,7 +12,7 @@
 ::-webkit-scrollbar {
   @apply hidden;
 }
-@media (max-width: 740px) {
+@media (max-width: 1024px) {
   .active p {
     @apply text-white bg-primary;
   }
