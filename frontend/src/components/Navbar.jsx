@@ -79,6 +79,48 @@ const Navbar = () => {
             Create Account
           </button>
         )}
+        <img
+          onClick={() => setShowMenu(true)}
+          className=' w-6 md:hidden'
+          src={assets.menu_icon}
+        />
+        {/*----------------- Mobile Menu ----------------------- */}
+        <div
+          className={` ${
+            showMenu ? 'fixed w-full' : 'h-0 w-0'
+          } md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all duration-500`}
+        >
+          <div className='flex items-center justify-between px-5 py-6'>
+            <img
+              src={assets.logo}
+              onClick={() => {
+                navigate('/');
+              }}
+              className='w-36 cursor-pointer'
+              alt=''
+            />
+            <img
+              className='w-7'
+              src={assets.cross_icon}
+              onClick={() => setShowMenu(false)}
+              alt=''
+            />
+          </div>
+          <ul className='flex flex-col items-center gap-4 mt-8 px-5 text-lg font-medium'>
+            <NavLink onClick={() => setShowMenu(false)} to='/'>
+              <p className='px-4 py-2 rounded inline-block'>HOME</p>
+            </NavLink>
+            <NavLink onClick={() => setShowMenu(false)} to='/doctors'>
+              <p className='px-4 py-2 rounded inline-block'>ALL DOCTORS</p>
+            </NavLink>
+            <NavLink onClick={() => setShowMenu(false)} to='/about'>
+              <p className='px-4 py-2 rounded inline-block'>ABOUT</p>
+            </NavLink>
+            <NavLink onClick={() => setShowMenu(false)} to='/contact'>
+              <p className='px-4 py-2 rounded inline-block'>CONTACT US</p>
+            </NavLink>
+          </ul>
+        </div>
       </div>
     </div>
   );

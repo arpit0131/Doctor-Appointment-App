@@ -9,6 +9,7 @@ const Doctors = () => {
   const [filterDoc, setFilterDoc] = useState([]);
   const [lastClicked, setLastClicked] = useState(null);
   const [isGeneralView, setIsGeneralView] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
   const navigate = useNavigate();
   const { doctors } = useContext(AppContext);
   const specialitySet = specialityData.map((doc) => doc.speciality);
@@ -47,7 +48,19 @@ const Doctors = () => {
     <div className='mt-24'>
       <p className='text-gray-600'>Browse through the doctors specialist...</p>
       <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
-        <div className='flex flex-col gap-4 text-sm text-gray-600'>
+        <button
+          className={`py-1 px-3 border test-sm rounded transition-all duration-150 sm:hidden ${
+            showFilters ? 'bg-primary text-white' : ''
+          }`}
+          onClick={() => setShowFilters((prev) => !prev)}
+        >
+          Filters
+        </button>
+        <div
+          className={`flex-col gap-4 text-sm text-gray-600 ${
+            showFilters ? 'flex' : 'hidden sm:flex'
+          }`}
+        >
           {specialitySet.map((speciality, idx) => (
             <p
               className={`w-[94vw] sm:w-auto pl-3 py-3 pr-16 border border-gray-300 rounded transition-all duration-300 cursor-pointer hover:bg-gray-200`}

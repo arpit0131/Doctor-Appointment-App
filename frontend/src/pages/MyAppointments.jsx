@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import AppointmentSection from './AppointmentSection';
 
 const MyAppointments = () => {
-  return (
-    <div>MyAppointments</div>
-  )
-}
+  const { doctors } = useContext(AppContext);
+  console.log(doctors);
 
-export default MyAppointments
+  return (
+    <div className='mt-24'>
+      <div>
+        <p className='pb-3 mt-12 font-medium text-zinc-500 border-b'>
+          My Appointments
+        </p>
+        <div>
+          {doctors.slice(0, 3).map((item, index) => (
+            <AppointmentSection docItem={item} index={index} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MyAppointments;
