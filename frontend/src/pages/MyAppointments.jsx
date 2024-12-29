@@ -9,7 +9,7 @@ const MyAppointments = () => {
   return (
     <div className='mt-24'>
       <div>
-        <p className='pb-3 mt-12 font-medium text-zinc-500 border-b'>
+        <p className='pb-3 mt-12 font-medium text-zinc-500 border-b text-2xl text-center'>
           My Appointments
         </p>
         <div>
