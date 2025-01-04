@@ -2,6 +2,7 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import { v2 as cloudinary } from 'cloudinary';
 import doctorModel from '../models/doctorsModel.js';
+import jwt from 'jsonwebtoken';
 
 const addDoctor = async (req, res) => {
   try {
@@ -74,7 +75,29 @@ const addDoctor = async (req, res) => {
       message: "Doctor's detail saved successfully",
     });
   } catch (e) {
+    console.log('Error is adding doctor:- ', e);
+
     return res.json({ success: false, message: e.message });
   }
 };
-export { addDoctor };
+
+//Api for Admin Login
+const loginAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      res.json({ success: true, token });
+    } else {
+      res.json({ success: false, message: 'Invalid credentials' });
+    }
+  } catch (e) {
+    console.log('Error in Admin login:- ', e);
+
+    res.json({ success: false, message: e.message });
+  }
+};
+export { addDoctor, loginAdmin };
