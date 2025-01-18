@@ -7,7 +7,7 @@ import axios from 'axios';
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('@prescripto.com');
   const [password, setPassword] = useState('');
   const [experience, setExperience] = useState('1 Year');
   const [fees, setFees] = useState('');
@@ -18,6 +18,18 @@ const AddDoctor = () => {
   const [address2, setAddress2] = useState('');
 
   const { backendUrl, aToken } = useContext(AdminContext);
+  const resetHandler = () => {
+    setDocImg(false);
+    setName('');
+    setEmail('@prescripto.com');
+    setPassword('');
+    setAddress1('');
+    setAddress2('');
+    setDegree('');
+    setAbout('');
+    setSpeciality('General physician');
+    setFees('');
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -51,15 +63,7 @@ const AddDoctor = () => {
 
       if (data.success) {
         toast.success(data.message);
-        setDocImg(false);
-        setName('');
-        setEmail('@prescripto.com');
-        setPassword('');
-        setAddress1('');
-        setAddress2('');
-        setDegree('');
-        setAbout('');
-        setFees('');
+        resetHandler();
       } else {
         toast.error(data.message);
       }
@@ -70,14 +74,20 @@ const AddDoctor = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler} className='m-5 w-full'>
-      <p className='mb-3 text-lg font-medium'>Add Doctor</p>
-      <div className='bg-white px-8 py-8 border rounded w-full max-w-4xl max-h-[80vh] overflow-y-scroll'>
-        <div className='flex items-center gap-4 mb-8 text-gray-500'>
+    <form
+      onSubmit={onSubmitHandler}
+      className=' flex flex-col items-center m-5 w-full'
+    >
+      <p className='mb-3  font-medium text-white bg-gradient-to-r from-blue-400 to-blue-700 shadow-lg px-6 py-4 rounded-lg border border-green-800'>
+        Add Doctor
+      </p>
+
+      <div className='bg-white px-8 py-8 border rounded w-full max-w-4xl'>
+        <div className='flex flex-col items-center gap-4 mb-8 text-gray-500'>
           <label htmlFor='doc-img'>
             <img
-              className='w-16 bg-gray-100 rounded-full cursor-pointer'
-              src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
+              className='w-24 bg-gray-100 rounded-full cursor-pointer'
+              src={docImg ? URL.createObjectURL(docImg) : assets.doctor_icon}
             />
           </label>
           <input
@@ -86,13 +96,13 @@ const AddDoctor = () => {
             id='doc-img'
             hidden
           />
-          <p>Upload Picture</p>
+          <p>Upload Image</p>
         </div>
 
         <div className='flex flex-col lg:flex-row items-start gap-10 text-gray-600'>
-          <div className='w-full lg:flex-1 flex flex-col gap-4 '>
+          <div className='w-full lg:flex-1 flex flex-col gap-6 '>
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Doctor name</p>
+              <p className='font-semibold '>Doctor name</p>
               <input
                 className='border rounded px-3 py-2'
                 type='text'
@@ -104,7 +114,7 @@ const AddDoctor = () => {
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Doctor email</p>
+              <p className='font-semibold '>Doctor email</p>
               <input
                 className='border rounded px-3 py-2'
                 type='email'
@@ -116,7 +126,7 @@ const AddDoctor = () => {
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Doctor password</p>
+              <p className='font-semibold '>Doctor password</p>
               <input
                 className='border rounded px-3 py-2'
                 type='password'
@@ -128,7 +138,7 @@ const AddDoctor = () => {
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Experience</p>
+              <p className='font-semibold '>Experience</p>
               <select
                 onChange={(e) => setExperience(e.target.value)}
                 value={experience}
@@ -150,7 +160,7 @@ const AddDoctor = () => {
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Fees</p>
+              <p className='font-semibold '>Fees</p>
               <input
                 className='border rounded px-3 py-2'
                 type='number'
@@ -162,9 +172,9 @@ const AddDoctor = () => {
             </div>
           </div>
 
-          <div className='w-full lg:flex-1 flex flex-col gap-4'>
+          <div className='w-full lg:flex-1 flex flex-col gap-6'>
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Speciality</p>
+              <p className='font-semibold '>Speciality</p>
               <select
                 onChange={(e) => setSpeciality(e.target.value)}
                 value={speciality}
@@ -182,7 +192,7 @@ const AddDoctor = () => {
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Education</p>
+              <p className='font-semibold '>Education</p>
               <input
                 className='border rounded px-3 py-2'
                 type='text'
@@ -194,7 +204,7 @@ const AddDoctor = () => {
             </div>
 
             <div className='flex-1 flex flex-col gap-1'>
-              <p>Address</p>
+              <p className='font-semibold '>Address</p>
               <input
                 className='border rounded px-3 py-2'
                 type='text'
@@ -216,7 +226,7 @@ const AddDoctor = () => {
         </div>
 
         <div>
-          <p className='mt-4 mb-2'>About Doctor</p>
+          <p className='mt-4 mb-2 font-semibold '>About Doctor</p>
           <textarea
             className='w-full px-4 pt-2 border rounded'
             type='text'
@@ -227,12 +237,21 @@ const AddDoctor = () => {
             required
           />
         </div>
-        <button
-          type='submit'
-          className='bg-primary my-6 text-white text-sm px-10 py-2 rounded-full hover:scale-105 hover:bg-white hover:text-primary hover:border hover:border-primary'
-        >
-          Add Doctor
-        </button>
+        <div className='flex items-center gap-5 justify-center'>
+          <button
+            type='submit'
+            className='bg-primary my-6 w-[170px] font-semibold text-white text-sm px-10 py-3 rounded-full hover:scale-105 hover:bg-white hover:text-primary hover:border hover:border-primary'
+          >
+            Add Doctor
+          </button>
+          <button
+            type='reset'
+            onClick={resetHandler}
+            className='bg-[#4BB543] my-6 w-[170px] font-semibold text-white text-sm px-10 py-3 rounded-full hover:scale-105 hover:bg-white hover:text-[#4BB543] hover:border hover:border-[#4BB543]'
+          >
+            Clear
+          </button>
+        </div>
       </div>
     </form>
   );
