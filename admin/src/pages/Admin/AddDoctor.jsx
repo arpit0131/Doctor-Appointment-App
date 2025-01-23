@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { assets } from '../../assets/assets';
 import { AdminContext } from '../../context/AdminContext';
 import { toast } from 'react-toastify';
-import { TailSpin } from 'react-loader-spinner';
 import axios from 'axios';
 import Loader from '../../components/Loader';
 
@@ -23,15 +22,15 @@ const AddDoctor = () => {
   const { backendUrl, aToken } = useContext(AdminContext);
   const resetHandler = () => {
     setDocImg(false);
-    // setName('');
-    // setEmail('@prescripto.com');
-    // setPassword('');
-    // setAddress1('');
-    // setAddress2('');
-    // setDegree('');
-    // setAbout('');
-    // setSpeciality('General physician');
-    // setFees('');
+    setName('');
+    setEmail('@prescripto.com');
+    setPassword('');
+    setAddress1('');
+    setAddress2('');
+    setDegree('');
+    setAbout('');
+    setSpeciality('General physician');
+    setFees('');
   };
 
   const onSubmitHandler = async (e) => {
@@ -260,7 +259,7 @@ const AddDoctor = () => {
                     behavior: 'smooth',
                   });
                 }}
-                className='bg-primary my-6 w-[170px] font-semibold text-white text-sm px-10 py-3 rounded-full hover:scale-105 hover:bg-white hover:text-primary hover:border hover:border-primary'
+                className='bg-[#4BB543] my-6 w-[170px] font-semibold text-white text-sm px-10 py-3 rounded-full hover:scale-105 hover:bg-white hover:text-[#4BB543] hover:border hover:border-[#4BB543]'
               >
                 Add Doctor
               </button>
@@ -273,7 +272,7 @@ const AddDoctor = () => {
                     behavior: 'smooth',
                   });
                 }}
-                className='bg-[#4BB543] my-6 w-[170px] font-semibold text-white text-sm px-10 py-3 rounded-full hover:scale-105 hover:bg-white hover:text-[#4BB543] hover:border hover:border-[#4BB543]'
+                className='bg-[#f42929] my-6 w-[170px] font-semibold text-white text-sm px-10 py-3 rounded-full hover:scale-105 hover:bg-white hover:text-[#f42929] hover:border hover:border-[#f42929]'
               >
                 Clear
               </button>
