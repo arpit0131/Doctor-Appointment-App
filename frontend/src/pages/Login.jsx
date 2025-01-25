@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../context/AppContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const SIGN_UP = 'Sign Up';
@@ -8,12 +12,55 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+  const { token, setToken, backendUrl } = useContext(AppContext);
+  const navigate = useNavigate();
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    try {
+      if (state === SIGN_UP) {
+        const { data } = await axios.post(backendUrl + '/api/user/register', {
+          name,
+          email,
+          password,
+        });
+        if (data.success) {
+          localStorage.setItem('token', data.token);
+          setToken(data.token);
+          toast.success('User registered successfully');
+        } else {
+          toast.error(data.message || 'User registration failed');
+        }
+      } else {
+        const { data } = await axios.post(backendUrl + '/api/user/login', {
+          email,
+          password,
+        });
+        if (data.success) {
+          localStorage.setItem('token', data.token);
+          setToken(data.token);
+          toast.success('User Logged in successfully');
+        } else {
+          toast.error('User Logged in failed');
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+
+      toast.error('Something went wrong');
+    }
   };
 
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token]);
   return (
-    <form className='min-h-[80vh] flex items-center mt-16'>
+    <form
+      onSubmit={submitHandler}
+      className='min-h-[80vh] flex items-center mt-16'
+    >
       <div className='flex flex-col gap-5 m-auto items-start p-8 md:min-w-[500px] sm:min-w-[96px] border rounded-xl text-zinc-600 shadow-lg'>
         <p className='text-2xl font-semibold'>
           {state === SIGN_UP ? 'Create Account' : 'Login'}
@@ -50,7 +97,7 @@ const Login = () => {
           />
         </div>
         <button
-          onClick={submitHandler}
+          type='submit'
           className='bg-primary text-white w-full rounded-md py-3 mt-4 hover:bg-white hover:text-primary hover: border border-primary'
         >
           {state === SIGN_UP ? 'Create Account' : 'Log in'}{' '}
