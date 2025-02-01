@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 const Navbar = () => {
+  const { userData } = useContext(AppContext);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const { token, setToken } = useContext(AppContext);
@@ -48,7 +49,7 @@ const Navbar = () => {
             <div className='flex items-center gap-2 cursor-pointer group relative'>
               <img
                 className='w-12 rounded-full'
-                src={assets.profile_pic}
+                src={userData.image}
                 alt='Profile pic'
               />
               <img
