@@ -12,6 +12,39 @@
 ::-webkit-scrollbar {
   @apply hidden;
 }
+@layer utilities {
+  @keyframes slide-left {
+    0% {
+      transform: translateX(300px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-left {
+    animation: slide-left 1s ease-out forwards;
+  }
+
+  .delay-500 {
+    animation-delay: 0.5s;
+  }
+
+  .delay-1000 {
+    animation-delay: 1s;
+  }
+
+  .delay-1500 {
+    animation-delay: 1.5s;
+  }
+
+  .delay-2000 {
+    animation-delay: 2s;
+  }
+}
 @media (max-width: 1024px) {
   .active p {
     @apply text-white bg-primary;

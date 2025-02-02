@@ -12,6 +12,7 @@ const Navbar = () => {
   const logout = () => {
     setToken(false);
     localStorage.removeItem('token');
+    navigate('/');
   };
 
   return (
@@ -20,14 +21,14 @@ const Navbar = () => {
       <div className='flex justify-between'>
         <img
           onClick={() => {
-            navigate('/');
+            navigate('/home');
           }}
           className='w-44 cursor-pointer'
           src={assets.logo}
           alt=''
         />
         <ul className='hidden lg:flex items-center gap-8 text-lg font-medium'>
-          <NavLink to='/'>
+          <NavLink to='/home'>
             <li className='py-1'>HOME</li>
             <hr className='h-1 bg-primary w-5/5 hidden' />
           </NavLink>
