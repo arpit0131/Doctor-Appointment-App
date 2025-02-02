@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Doctors from './pages/Doctors';
 import Login from './pages/Login';
@@ -12,6 +12,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CoverPage from './components/CoverPage';
 import SignUp from './pages/SignUp';
+import { AppContext } from './context/AppContext';
+
+const PrivateRoute = ({ element }) => {
+  const { token } = useContext(AppContext);
+  return token ? element : <Navigate to='/' />; // If token exists, show the element, else redirect to CoverPage
+};
 
 const App = () => {
   return (
@@ -19,20 +25,38 @@ const App = () => {
       <ToastContainer />
       <Routes>
         <Route path='/' element={<CoverPage />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/doctors' element={<Doctors />} />
-        <Route path='/doctors/:speciality' element={<Doctors />} />
+        <Route path='/home' element={<PrivateRoute element={<Home />} />} />
+        <Route
+          path='/doctors'
+          element={<PrivateRoute element={<Doctors />} />}
+        />
+        <Route
+          path='/doctors/:speciality'
+          element={<PrivateRoute element={<Doctors />} />}
+        />
+        <Route
+          path='/my-profile'
+          element={<PrivateRoute element={<MyProfile />} />}
+        />
+        <Route
+          path='/my-appointments'
+          element={<PrivateRoute element={<MyAppointments />} />}
+        />
+        <Route
+          path='/appointment/:docId'
+          element={<PrivateRoute element={<Appointment />} />}
+        />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/my-profile' element={<MyProfile />} />
-        <Route path='/my-appointments' element={<MyAppointments />} />
-        <Route path='/appointment/:docId' element={<Appointment />} />
+        <Route path='/about' element={<PrivateRoute element={<About />} />} />
+        <Route
+          path='/contact'
+          element={<PrivateRoute element={<Contact />} />}
+        />
       </Routes>
     </div>
   );
 };
-export default App;
 
+export default App;
 //10:15
