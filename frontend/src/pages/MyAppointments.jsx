@@ -5,10 +5,12 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const MyAppointments = () => {
   const { backendUrl, token } = useContext(AppContext);
   const [appointments, setAppointments] = useState([]);
+  const navigate = useNavigate();
   console.log('My Appointments:- ', appointments);
 
   const getUserAppointments = async () => {
@@ -50,9 +52,17 @@ const MyAppointments = () => {
                 />
               ))
             ) : (
-              <p className='ml-[36%] mt-24 text-3xl h-[26vh] text-red-500'>
-                No Appointments booked till now...
-              </p>
+              <>
+                <p className='ml-[36%] mt-24 text-3xl text-red-500'>
+                  No Appointments booked till now...
+                </p>
+                <button
+                  onClick={() => navigate('/doctors')}
+                  className='ml-[36%] mt-20 px-20 py-4 bg-primary rounded-full text-white text-xl hover:scale-105 '
+                >
+                  Book your Appointment Now
+                </button>
+              </>
             )}
           </div>
         </div>
