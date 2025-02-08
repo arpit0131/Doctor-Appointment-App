@@ -9,6 +9,7 @@ import axios from 'axios';
 const MyAppointments = () => {
   const { backendUrl, token } = useContext(AppContext);
   const [appointments, setAppointments] = useState([]);
+  console.log('My Appointments:- ', appointments);
 
   const getUserAppointments = async () => {
     try {

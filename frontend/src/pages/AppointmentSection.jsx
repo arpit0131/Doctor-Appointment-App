@@ -1,15 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
+import Modal from '../components/Modal';
 
 const AppointmentSection = ({ docItem, index, userAppointment }) => {
   const { backendUrl, token, getAllDoctors } = useContext(AppContext);
+  const [showModal, setShowModal] = useState(false);
 
+  const sureCancel = () => {
+    setShowModal(true); // Show the modal
+  };
+
+  const closeModal = () => {
+    setShowModal(false); // Hide the modal
+  };
   const cancelAppointment = async (appointmentId) => {
-    console.log('Token:- ', token);
-    console.log('Appointment id:- ', appointmentId);
-
     try {
       const { data } = await axios.post(
         backendUrl + '/api/user/cancel-appointment',
@@ -67,24 +73,24 @@ const AppointmentSection = ({ docItem, index, userAppointment }) => {
         </div>
         <div className=''></div>
         <div className=' flex flex-col justify-end gap-2'>
-          {!docItem.cancelled && (
-            <button className='bg-primary px-9 py-1.5 text-white rounded-md hover:bg-blue-700 hover:scale-105 transition-all duration-150'>
-              Pay Online
-            </button>
-          )}
-          {!docItem.cancelled && (
-            <button
-              onClick={() => cancelAppointment(docItem._id)}
-              className='bg-white px-9 py-1.5 text-stone-500 border border-stone-500 rounded-md hover:bg-red-500 hover:text-white hover:border-none hover:scale-105 transition-all duration-150'
-            >
-              Cancel Appointment
-            </button>
-          )}
+          <button className='bg-primary px-9 py-1.5 text-white rounded-md hover:bg-blue-700 hover:scale-105 transition-all duration-150'>
+            Pay Online
+          </button>
 
-          {docItem.cancelled && (
-            <button className='text-red-500 px-9 py-1.5 bg-white border border-red-500 rounded-md '>
-              Appointment Cancelled
-            </button>
+          <button
+            onClick={sureCancel}
+            className='bg-white px-9 py-1.5 text-stone-500 border border-stone-500 rounded-md hover:bg-red-500 hover:text-white hover:border-none hover:scale-105 transition-all duration-150'
+          >
+            Cancel Appointment
+          </button>
+          {showModal && (
+            <div className='absolute z-30 flex justify-center items-center'>
+              <Modal
+                cancelAppointment={cancelAppointment}
+                closeModal={closeModal}
+                appointmentId={docItem._id}
+              />
+            </div>
           )}
         </div>
       </div>

@@ -5,7 +5,6 @@
 * {
   font-family: Outfit;
 }
-
 .active hr {
   @apply block;
 }
