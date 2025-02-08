@@ -1,12 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import AppointmentSection from './AppointmentSection';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const MyAppointments = () => {
-  const { doctors } = useContext(AppContext);
-  console.log(doctors);
+  const { backendUrl, token } = useContext(AppContext);
+  const [appointments, setAppointments] = useState([]);
+
+  const getUserAppointments = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + '/api/user/appointments', {
+        headers: { token },
+      });
+
+      if (data.success) {
+        setAppointments(data.appointments.reverse()); //here as a response initially we will get the recent booked appointment in bottom . So to get the recent booked appointment at top, we reverse the response
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      getUserAppointments();
+    }
+  }, [token]);
 
   return (
     <>
@@ -17,9 +39,20 @@ const MyAppointments = () => {
             My Appointments
           </p>
           <div>
-            {doctors.slice(0, 3).map((item, index) => (
-              <AppointmentSection docItem={item} index={index} />
-            ))}
+            {appointments.length > 0 ? (
+              appointments.map((item, index) => (
+                <AppointmentSection
+                  key={index}
+                  docItem={item}
+                  index={index}
+                  userAppointment={getUserAppointments}
+                />
+              ))
+            ) : (
+              <p className='ml-[36%] mt-24 text-3xl h-[26vh] text-red-500'>
+                No Appointments booked till now...
+              </p>
+            )}
           </div>
         </div>
       </div>
