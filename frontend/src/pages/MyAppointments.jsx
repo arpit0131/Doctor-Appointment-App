@@ -43,14 +43,22 @@ const MyAppointments = () => {
           </p>
           <div>
             {appointments.length > 0 ? (
-              appointments.map((item, index) => (
-                <AppointmentSection
-                  key={index}
-                  docItem={item}
-                  index={index}
-                  userAppointment={getUserAppointments}
-                />
-              ))
+              <>
+                {appointments.map((item, index) => (
+                  <AppointmentSection
+                    key={index}
+                    docItem={item}
+                    index={index}
+                    userAppointment={getUserAppointments}
+                  />
+                ))}
+                <button
+                  onClick={() => navigate('/doctors')}
+                  className='ml-[36%] mt-20 px-20 py-4 bg-primary rounded-full text-white text-xl hover:scale-105 '
+                >
+                  Book More Appointment
+                </button>
+              </>
             ) : (
               <>
                 <p className='ml-[36%] mt-24 text-3xl text-red-500'>
