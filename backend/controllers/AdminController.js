@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { v2 as cloudinary } from 'cloudinary';
 import doctorModel from '../models/doctorsModel.js';
 import jwt from 'jsonwebtoken';
+import appointmentModel from '../models/appointmentModel.js';
 
 const addDoctor = async (req, res) => {
   try {
@@ -106,7 +107,60 @@ const allDoctors = async (req, res) => {
     const doctors = await doctorModel.find({}).select('-password');
     res.json({ success: true, doctors });
   } catch (e) {
+    console.log(e);
+
     res.json({ success: false, message: e.message });
   }
 };
-export { addDoctor, loginAdmin, allDoctors };
+
+//get all appointment
+const appointmentAdmin = async (req, res) => {
+  try {
+    const appointments = await appointmentModel.find({});
+    res.json({ success: true, appointments });
+  } catch (error) {
+    console.log(error);
+
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const cancelAppointment = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const appointmentData = await appointmentModel.findById(appointmentId);
+
+    if (!appointmentData) {
+      return res.json({ success: false, message: 'Appointment not found' });
+    }
+    // await appointmentModel.findByIdAndUpdate(appointmentId, {
+    //   cancelled: true,
+    // });
+    await appointmentModel.findByIdAndDelete(appointmentId);
+
+    // Releasing doctor slot
+    const { docId, slotDate, slotTime } = appointmentData;
+    const doctorData = await doctorModel.findById(docId);
+
+    if (doctorData?.slots_booked?.[slotDate]) {
+      doctorData.slots_booked[slotDate] = doctorData.slots_booked[
+        slotDate
+      ].filter((e) => e !== slotTime);
+      await doctorModel.findByIdAndUpdate(docId, {
+        slots_booked: doctorData.slots_booked,
+      });
+    }
+
+    res.json({ success: true, message: 'Appointment Canceled' });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+export {
+  addDoctor,
+  loginAdmin,
+  allDoctors,
+  appointmentAdmin,
+  cancelAppointment,
+};
