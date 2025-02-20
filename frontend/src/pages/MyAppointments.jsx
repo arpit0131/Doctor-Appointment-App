@@ -31,7 +31,7 @@ const MyAppointments = () => {
     if (token) {
       getUserAppointments();
     }
-  }, [token]);
+  }, [token, appointments]);
 
   return (
     <>
