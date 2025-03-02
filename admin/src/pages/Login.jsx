@@ -5,6 +5,7 @@ import { AdminContext } from '../context/AdminContext';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 import { DoctorContext } from '../context/DoctorContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [state, setState] = useState('Admin');
@@ -14,6 +15,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const { setDToken } = useContext(DoctorContext);
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -29,6 +31,7 @@ const Login = () => {
           localStorage.setItem('aToken', data.token);
           setAToken(data.token);
           toast.success('Admin Login Successfull');
+          navigate('/admin-dashboard');
         } else {
           toast.error(data.message);
         }
@@ -44,6 +47,7 @@ const Login = () => {
           console.log('D token:- ', data.token);
 
           toast.success('Doctor Login Successfull');
+          navigate('/doctor-dashboard');
         } else {
           toast.error(data.message);
         }
