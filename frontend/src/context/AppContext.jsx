@@ -19,6 +19,8 @@ const AppContextProvider = (props) => {
         setDoctors(data.doctors);
         console.log(data.doctors);
       } else {
+        console.log('Error:- ', data.message);
+
         toast.error('Something went wrong');
       }
     } catch (error) {

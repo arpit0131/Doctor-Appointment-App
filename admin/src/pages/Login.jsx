@@ -4,6 +4,7 @@ import { assets } from '../assets/assets';
 import { AdminContext } from '../context/AdminContext';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
+import { DoctorContext } from '../context/DoctorContext';
 
 const Login = () => {
   const [state, setState] = useState('Admin');
@@ -11,6 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const { setAToken, backendUrl } = useContext(AdminContext);
   const [loading, setLoading] = useState(false);
+
+  const { setDToken } = useContext(DoctorContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -31,6 +34,19 @@ const Login = () => {
         }
       } else {
         //Doctor Login Api call
+        const { data } = await axios.post(backendUrl + '/api/doctor/login', {
+          email,
+          password,
+        });
+        if (data.success) {
+          localStorage.setItem('dToken', data.token);
+          setDToken(data.token);
+          console.log('D token:- ', data.token);
+
+          toast.success('Doctor Login Successfull');
+        } else {
+          toast.error(data.message);
+        }
       }
     } catch (error) {
       console.log('Catch error:- ', error);
