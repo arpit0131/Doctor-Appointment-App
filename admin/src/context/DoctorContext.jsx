@@ -59,6 +59,7 @@ const DoctorContextProvider = (props) => {
 
       if (data.success) {
         toast.success(data.message);
+        getDashData();
         getAppointments();
       } else {
         toast.error(data.message);
@@ -79,6 +80,7 @@ const DoctorContextProvider = (props) => {
 
       if (data.success) {
         toast.success(data.message);
+        getDashData();
         getAppointments();
       } else {
         toast.error(data.message);
