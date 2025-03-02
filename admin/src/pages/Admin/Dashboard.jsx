@@ -61,9 +61,9 @@ const Dashboard = () => {
                 className='flex items-center px-6 py-3 gap-3 hover:bg-gray-100'
                 key={idx}
               >
-                <img className='rounded-full w-10' src={item.docData.image} />
+                <img className='rounded-full w-16' src={item.docData.image} />
                 <div className='flex-1 text-sm'>
-                  <p className='text-gray-800 font-medium'>
+                  <p className='text-gray-800 font-medium text-lg'>
                     {item.docData.name}
                   </p>
                   <p className='text-gray-600'>
@@ -72,7 +72,7 @@ const Dashboard = () => {
                 </div>
                 <img
                   onClick={() => cancelAppointment(item._id)}
-                  className='w-10 cursor-pointer'
+                  className='w-16 cursor-pointer'
                   src={assets.cancel_icon}
                 />
               </div>
